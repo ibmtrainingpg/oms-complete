@@ -7,12 +7,21 @@ import org.springframework.data.annotation.Id;
 
 public class Order {
 	@NotNull
+	private float tax;
+	@NotNull
 	@NotBlank
 	private String item;
 	@NotNull
 	private float price;
 	@Id
 	private String id;
+	public float getTax() {
+		return tax;
+	}
+
+	public void setTax(float tax) {
+		this.tax = tax;
+	}
 
 	public String getId() {
 		return id;

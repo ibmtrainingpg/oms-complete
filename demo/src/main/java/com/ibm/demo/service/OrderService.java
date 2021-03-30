@@ -16,10 +16,13 @@ public class OrderService { // Spring Beans,singleton design pattern
 	OrderRepository orderRepository;
 	@Autowired
 	RestTemplate getTaxesTemplate;
+
 	public String createOrder(Order order) {
-		//call getTaxes
-		Float response = getTaxesTemplate.getForObject("http://localhost:8080/getTaxes?price={price}", Float.class, order.getPrice());
-		System.out.println(response );
+		// call getTaxes
+		Float tax = getTaxesTemplate.getForObject("http://localhost:8080/getTaxes?price={price}", Float.class,
+				order.getPrice());
+		System.out.println(tax);
+		order.setTax(tax);
 		Order savedOrder = orderRepository.save(order);
 		return savedOrder.getId();
 	}
@@ -31,7 +34,7 @@ public class OrderService { // Spring Beans,singleton design pattern
 	public void updateOrder(Order order) {
 		orderRepository.save(order);
 	}
-	
+
 	public void deleteOrder(String orderId) {
 		orderRepository.deleteById(orderId);
 	}
