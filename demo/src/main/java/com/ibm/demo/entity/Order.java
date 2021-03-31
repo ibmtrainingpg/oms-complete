@@ -7,7 +7,7 @@ import org.springframework.data.annotation.Id;
 
 public class Order {
 	@NotNull
-	private float tax;
+	private float tax; //derived data
 	@NotNull
 	@NotBlank
 	private String item;

@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import com.ibm.demo.entity.Order;
@@ -17,6 +18,7 @@ public class OrderService { // Spring Beans,singleton design pattern
 	@Autowired
 	RestTemplate getTaxesTemplate;
 
+	@Transactional
 	public String createOrder(Order order) {
 		// call getTaxes
 		Float tax = getTaxesTemplate.getForObject("http://localhost:8080/getTaxes?price={price}", Float.class,
@@ -24,6 +26,8 @@ public class OrderService { // Spring Beans,singleton design pattern
 		System.out.println(tax);
 		order.setTax(tax);
 		Order savedOrder = orderRepository.save(order);
+//		if (order != null)
+//			throw new RuntimeException();
 		return savedOrder.getId();
 	}
 
